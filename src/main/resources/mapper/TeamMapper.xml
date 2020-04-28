@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.sdu.ise.labs.dao.TeamMapper">
+
+    <resultMap id="BaseResultMap" type="cn.edu.sdu.ise.labs.model.Team">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="team_code" jdbcType="VARCHAR" property="teamCode"/>
+        <result column="team_name" jdbcType="VARCHAR" property="teamName"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="contact" jdbcType="VARCHAR" property="contact"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, team_code, team_name, province, contact, phone, description, created_at, updated_at,
+    created_by, updated_by
+    </sql>
+
+    <!-- 获取队伍(分页) -->
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from team
+        <where>
+            <if test="teamName != null">
+                team_name like #{teamName}
+            </if>
+            <if test="contact != null">
+                contact like #{contact}
+            </if>
+            <if test="province != null">
+                province like #{province}
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="getByCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from team
+        <where>
+            team_code like #{teamCode}
+        </where>
+    </select>
+
+    <select id="listByTeamName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from team
+        <where>
+            team_name like #{teamName}
+        </where>
+    </select>
+
+    <select id="count" resultType="integer">
+        select count(*)
+        from team
+        <where>
+            <if test="teamName != null">
+                team_name like #{teamName}
+            </if>
+            <if test="contact != null">
+                contact like #{contact}
+            </if>
+            <if test="province != null">
+                province like #{province}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="cn.edu.sdu.ise.labs.model.Team">
+        insert into team (id, team_code, team_name,
+                          province, contact, phone,
+                          description, created_at, updated_at,
+                          created_by, updated_by)
+        values (#{id,jdbcType=INTEGER}, #{teamCode,jdbcType=VARCHAR}, #{teamName,jdbcType=VARCHAR},
+                #{province,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+                #{description,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
+                #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteByCode">
+        delete
+        from team
+        where team_code = #{teamCode}
+    </delete>
+
+    <update id="updateByPrimaryKey" parameterType="cn.edu.sdu.ise.labs.model.Team">
+        update team
+        set team_name   = #{teamName,jdbcType=VARCHAR},
+            contact     = #{contact,jdbcType=VARCHAR},
+            phone       = #{phone,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
+            updated_by  = #{updatedBy,jdbcType=VARCHAR},
+            updated_at  = #{updatedAt,jdbcType=TIMESTAMP},
+            province    = #{province,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

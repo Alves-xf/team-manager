@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.sdu.ise.labs.dao.AthleteMapper">
+
+    <resultMap id="BaseResultMap" type="cn.edu.sdu.ise.labs.model.Athlete">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="athlete_code" jdbcType="VARCHAR" property="athleteCode"/>
+        <result column="reg_code" jdbcType="VARCHAR" property="regCode"/>
+        <result column="team_code" jdbcType="VARCHAR" property="teamCode"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="id_number" jdbcType="VARCHAR" property="idNumber"/>
+        <result column="id_type" jdbcType="CHAR" property="idType"/>
+        <result column="gender" jdbcType="CHAR" property="gender"/>
+        <result column="age" jdbcType="INTEGER" property="age"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, athlete_code, reg_code, team_code, name, id_number, id_type, gender, age, created_at,
+    updated_at, created_by, updated_by
+    </sql>
+
+    <select id="countByTeamCode" resultType="integer">
+        select count(*)
+        from athlete
+        <where>
+            and team_code = #{teamCode}
+        </where>
+    </select>
+
+</mapper>
