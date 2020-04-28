@@ -1,15 +1,11 @@
 package cn.edu.sdu.ise.labs.service.utils;
 
-import cn.edu.sdu.ise.labs.dao.AthleteMapper;
-import cn.edu.sdu.ise.labs.dao.TeamMapper;
 import cn.edu.sdu.ise.labs.model.Team;
 import cn.edu.sdu.ise.labs.utils.FormatUtils;
 import cn.edu.sdu.ise.labs.vo.TeamVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 
 @Component
 public class TeamUtils {
